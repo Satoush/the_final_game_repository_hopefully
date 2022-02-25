@@ -12,7 +12,7 @@ class Character():
         self.Y = Y
         self.changeX = changeX
         self.changeY = changeY
-        self.velocity = 1
+        self.velocity = 0.5
         self.bullets = []
         self.bullet_vel = 10
         self.targetX = targetX

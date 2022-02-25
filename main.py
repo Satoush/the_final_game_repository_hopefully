@@ -147,10 +147,10 @@ def game():
 
 
             character.bullets = tempList
-            enemy.updateAllZombies(Enemy_list,character.X,character.Y)
-            # d
-            # character.has_collided(zombie.rect)
-            character.update()
+        enemy.updateAllZombies(Enemy_list,character.X,character.Y)
+        # d
+        # character.has_collided(zombie.rect)
+        character.update()
 
         pygame.display.update()
 

@@ -142,7 +142,7 @@ def game(kills,num_of_enemies):
                if bullet.has_collided(e.rect):
                    if bullet in character.bullets:
                         character.bullets.remove(bullet)
-
+# hloo
                    e.destroy(Enemy_list)
                    EnemyX = random.randint(0, 725)
                    EnemyY = random.randint(0, 600)

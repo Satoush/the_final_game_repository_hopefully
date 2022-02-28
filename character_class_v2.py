@@ -77,8 +77,8 @@ class Character():
     def fire(self):
         mx, my = pygame.mouse.get_pos()
         new_bullet = bullet('Assets/Bullet.png',(255, 0, 0),self.X+16,self.Y+16,self.bullet_vel,mx,my)
-        new_bullet.move()
         self.bullets.append(new_bullet)
+        #new_bullet.move()
         print('fire')
 
     def has_collided(self,Enemy):

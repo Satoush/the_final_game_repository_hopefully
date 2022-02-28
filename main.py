@@ -26,6 +26,7 @@ playerX = 400
 playerY = 300
 playerX_change = 0
 playerY_change = 0
+kills = 0
 
 
 
@@ -47,6 +48,7 @@ character = Character(playerX,playerY,playerX_change,playerY_change,mx,my)
 
 
 # zombie_group = pygame.sprite.Group()#
+
 
 for i in range(num_of_enemies):
     EnemyX = random.randint(0, 725)
@@ -93,7 +95,7 @@ def main_menu():
 
 
 
-def game():
+def game(kills,num_of_enemies):
     running = True
 
 
@@ -120,7 +122,7 @@ def game():
 
         for e in Enemy_list:
             if character.has_collided(e.rect) == True:
-                running = False
+                #running = False
                 e.destroy(Enemy_list)
                 EnemyX = random.randint(0, 725)
                 EnemyY = random.randint(0, 600)
@@ -128,25 +130,41 @@ def game():
                 Enemy_list.append(zombie)
 
         # Bullet list
-        tempList = character.bullets
+        #tempList = character.bullets
 
-        for bullet in character.bullets[:]:
+
+
+        # for bullet in character.bullets[:]:
+        for bullet in character.bullets:
             bullet.draw(screen)
             bullet.move()
             for e in Enemy_list:
                if bullet.has_collided(e.rect):
+                   if bullet in character.bullets:
+                        character.bullets.remove(bullet)
+
                    e.destroy(Enemy_list)
-                   bullet.destroy(character.bullets)
-                   tempList.remove(bullet)
                    EnemyX = random.randint(0, 725)
                    EnemyY = random.randint(0, 600)
                    zombie = enemy(EnemyX, EnemyY)
                    Enemy_list.append(zombie)
+                   kills += 1
+                   print(bullet)
+
+        if kills == num_of_enemies:
+            print ('round complete')
+            kills = 0
+            EnemyX = random.randint(0, 725)
+            EnemyY = random.randint(0, 600)
+            zombie = enemy(EnemyX, EnemyY)
+            if EnemyX != (character.X + 64) and EnemyY != (character.Y + 64):
+                Enemy_list.append(zombie)
 
 
 
 
-            character.bullets = tempList
+
+            #character.bullets = tempList
         enemy.updateAllZombies(Enemy_list,character.X,character.Y)
         # d
         # character.has_collided(zombie.rect)
@@ -158,4 +176,6 @@ def game():
 
 # Calling main program
 if __name__ == '__main__':
-    game()
+    game(kills,num_of_enemies)
+
+# todo rounds, visuals

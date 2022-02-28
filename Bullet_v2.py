@@ -34,8 +34,10 @@ class bullet():
 
     def destroy(self,bullet_array):
         if bullet in bullet_array:
-            bullet_array.remove(self)
+            bullet_array.remove(bullet)
             del self
+        #bullet_array.remove(bullet)
+
 
     def has_collided(self, Enemy):
         if self.rect.colliderect(Enemy):

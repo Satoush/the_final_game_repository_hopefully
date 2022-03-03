@@ -26,7 +26,8 @@ playerX = 400
 playerY = 300
 playerX_change = 0
 playerY_change = 0
-
+rounds = 0
+kills = 0
 
 
 # Enemies data
@@ -48,14 +49,22 @@ character = Character(playerX,playerY,playerX_change,playerY_change,mx,my)
 
 # zombie_group = pygame.sprite.Group()#
 
-for i in range(num_of_enemies):
-    EnemyX = random.randint(0, 725)
-    EnemyY = random.randint(0, 600)
-    zombie = enemy(EnemyX, EnemyY)
-    if EnemyX != (character.X + 64) and EnemyY != (character.Y + 64):
-        Enemy_list.append(zombie)
-    print('enemy x', EnemyX)
-    print('player x',character.X + 64)
+def spawn(num_of_enemies):
+    count = 0
+    while count < num_of_enemies:
+        EnemyX = random.randint(0, 725)
+        EnemyY = random.randint(0, 600)
+        if EnemyX <= (character.X + 128) and EnemyX >= (character.X - 128):
+            if EnemyY <= (character.Y + 128) and EnemyY >= (character.Y - 128):
+                pass
+        else:
+
+            zombie = enemy(EnemyX, EnemyY)
+            Enemy_list.append(zombie)
+            count += 1
+
+    # print('enemy x', EnemyX)
+    # print('player x',character.X + 64)
 
 
 # -------- Main Program Loop -----------
@@ -93,7 +102,7 @@ def main_menu():
 
 
 
-def game():
+def game(rounds,kills,num_of_enemies):
     running = True
 
 
@@ -120,13 +129,13 @@ def game():
 
         for e in Enemy_list:
             if character.has_collided(e.rect) == True:
-                # running = False
-                # e.destroy(Enemy_list)
+                running = False
+                e.destroy(e,Enemy_list)
                 print('hit')
-                EnemyX = random.randint(0, 725)
-                EnemyY = random.randint(0, 600)
-                zombie = enemy(EnemyX, EnemyY)
-                Enemy_list.append(zombie)
+                # EnemyX = random.randint(0, 725)
+                # EnemyY = random.randint(0, 600)
+                # zombie = enemy(EnemyX, EnemyY)
+                # Enemy_list.append(zombie)
 
         # Bullet list
         # tempList = character.bullets
@@ -136,13 +145,16 @@ def game():
             bullet.move()
             for e in Enemy_list:
                if bullet.has_collided(e.rect):
-                   e.destroy(Enemy_list)
+                   e.destroy(e,Enemy_list)
                    #bullet.destroy(character.bullets)
                    bullet.destroy(bullet,character.bullets)
-                   EnemyX = random.randint(0, 725)
-                   EnemyY = random.randint(0, 600)
-                   zombie = enemy(EnemyX, EnemyY)
-                   Enemy_list.append(zombie)
+                   spawn(1)
+
+        if kills == num_of_enemies:
+            print ('round complete')
+            spawn(2)
+
+
 
 
 
@@ -154,11 +166,13 @@ def game():
         # d
         # character.has_collided(zombie.rect)
         character.update()
-
         pygame.display.update()
 
 
 
+spawn(num_of_enemies)
+
 # Calling main program
 if __name__ == '__main__':
-    game()
+    game(rounds,kills,num_of_enemies)
+

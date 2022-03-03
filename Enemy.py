@@ -9,6 +9,8 @@ class enemy():
         self.Image_path = pygame.image.load('Assets/zombie.png')
         self.X = X
         self.Y = Y
+        self.changeX = 0
+        self.changeY = 0
         self.velocity = 0.01
         self.num_of_enemies = 6
         self.rect = self.Image_path.get_rect(center = (self.X,self.Y))
@@ -56,10 +58,10 @@ class enemy():
             # self.rect[0] += self.changeX
 
 
-    def destroy(self,Enemy_array):
-        Enemy_array.remove(self)
-        del self
-
+    def destroy(self,enemy_object,enemy_array):
+        if enemy_object in enemy_array:
+            enemy_array.remove(self)
+            del self
     
 
 

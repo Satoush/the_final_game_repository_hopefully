@@ -149,10 +149,15 @@ def game(rounds,kills,num_of_enemies):
                    #bullet.destroy(character.bullets)
                    bullet.destroy(bullet,character.bullets)
                    spawn(1)
+                   kills +=1
 
         if kills == num_of_enemies:
+            kills = 0
+            num = 0
+            rounds += 1
+            num_of_enemies += 1
             print ('round complete')
-            spawn(2)
+            spawn(num+1)
 
 
 

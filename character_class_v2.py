@@ -83,7 +83,6 @@ class Character():
 
     def has_collided(self,Enemy):
         if self.rect.colliderect(Enemy):
-            print('dead')
             return True
 
     #

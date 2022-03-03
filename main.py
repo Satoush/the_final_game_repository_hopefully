@@ -120,24 +120,25 @@ def game():
 
         for e in Enemy_list:
             if character.has_collided(e.rect) == True:
-                running = False
-                e.destroy(Enemy_list)
+                # running = False
+                # e.destroy(Enemy_list)
+                print('hit')
                 EnemyX = random.randint(0, 725)
                 EnemyY = random.randint(0, 600)
                 zombie = enemy(EnemyX, EnemyY)
                 Enemy_list.append(zombie)
 
         # Bullet list
-        tempList = character.bullets
+        # tempList = character.bullets
 
-        for bullet in character.bullets[:]:
+        for bullet in character.bullets:
             bullet.draw(screen)
             bullet.move()
             for e in Enemy_list:
                if bullet.has_collided(e.rect):
                    e.destroy(Enemy_list)
-                   bullet.destroy(character.bullets)
-                   tempList.remove(bullet)
+                   #bullet.destroy(character.bullets)
+                   bullet.destroy(bullet,character.bullets)
                    EnemyX = random.randint(0, 725)
                    EnemyY = random.randint(0, 600)
                    zombie = enemy(EnemyX, EnemyY)
@@ -146,7 +147,9 @@ def game():
 
 
 
-            character.bullets = tempList
+
+
+            #character.bullets = tempList
         enemy.updateAllZombies(Enemy_list,character.X,character.Y)
         # d
         # character.has_collided(zombie.rect)

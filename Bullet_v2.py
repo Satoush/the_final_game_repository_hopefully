@@ -32,8 +32,8 @@ class bullet():
         rotated_image = pygame.transform.rotate(self.image, self.angle)  # This changes the rotation of the players image where the position of the mouse would be
         screen.blit(rotated_image, (self.posX, self.posY))
 
-    def destroy(self,bullet_array):
-        if bullet in bullet_array:
+    def destroy(self,bullet_object,bullet_array):
+        if bullet_object in bullet_array:
             bullet_array.remove(self)
             del self
 
@@ -42,9 +42,9 @@ class bullet():
             return True
 
 
-    def update(self):
-        self.move()
-        self.destroy()
+    # def update(self):
+    #     self.move()
+    #     self.destroy()
 
 
 

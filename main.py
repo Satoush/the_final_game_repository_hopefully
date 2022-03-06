@@ -10,6 +10,7 @@ import pygame
 import random
 from character_class_v2 import Character
 from Enemy import enemy
+from Fast_Enemy import fast_enemy
 from Button import button
 
 # Intialize pygame
@@ -32,6 +33,11 @@ kills = 0
 
 # Enemies data
 Enemy_list = []
+
+changeX  = 0
+changeY = 0
+velocity = 0.01
+fast_velocity = 0.05
 
 num_of_enemies = 6
 mx, my = pygame.mouse.get_pos()
@@ -59,12 +65,26 @@ def spawn(num_of_enemies):
                 pass
         else:
 
-            zombie = enemy(EnemyX, EnemyY)
+            zombie = enemy(pygame.image.load('Assets/zombie.png'),EnemyX, EnemyY,changeX,changeY,velocity)
             Enemy_list.append(zombie)
             count += 1
 
     # print('enemy x', EnemyX)
     # print('player x',character.X + 64)
+
+def spawn_fast(num_of_enemies):
+    count = 0
+    while count < num_of_enemies:
+        EnemyX = random.randint(0, 725)
+        EnemyY = random.randint(0, 600)
+        if EnemyX <= (character.X + 128) and EnemyX >= (character.X - 128):
+            if EnemyY <= (character.Y + 128) and EnemyY >= (character.Y - 128):
+                pass
+        else:
+
+            zombie_fast = fast_enemy(pygame.image.load('Assets/User_iconnn.png'),EnemyX, EnemyY,changeX,changeY,velocity)
+            Enemy_list.append(zombie_fast)
+            count += 1
 
 
 # -------- Main Program Loop -----------
@@ -141,7 +161,7 @@ def game(rounds,kills,num_of_enemies):
                    e.destroy(e,Enemy_list)
                    #bullet.destroy(character.bullets)
                    bullet.destroy(bullet,character.bullets)
-                   spawn(1)
+                   spawn_fast(1)
                    kills +=1
 
         if kills == num_of_enemies:
@@ -150,12 +170,7 @@ def game(rounds,kills,num_of_enemies):
             rounds += 1
             num_of_enemies += 1
             print ('round complete')
-            spawn(num+1)
-
-
-
-
-
+            spawn_fast(num+1)
 
 
 
@@ -168,10 +183,9 @@ def game(rounds,kills,num_of_enemies):
 
 
 
-spawn(num_of_enemies)
+spawn_fast(num_of_enemies)
 
 # Calling main program
-if __name__ == '__main__':
-    main_menu()
-    #game(rounds,kills,num_of_enemies)
+main_menu()
+#game(rounds,kills,num_of_enemies)
 

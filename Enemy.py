@@ -5,14 +5,14 @@ screen = pygame.display.set_mode((800, 600))
 
 
 class enemy():
-    def __init__(self,X,Y):
-        self.Image_path = pygame.image.load('Assets/zombie.png')
+    def __init__(self,Image_path,X,Y,changeX,changeY,velocity):
+        self.Image_path = Image_path
         self.X = X
         self.Y = Y
-        self.changeX = 0
-        self.changeY = 0
-        self.velocity = 0.01
-        self.num_of_enemies = 6
+        self.changeX = changeX
+        self.changeY = changeY
+        self.velocity = velocity
+        #self.num_of_enemies = 6
         self.rect = self.Image_path.get_rect(center = (self.X,self.Y))
        #print(self.rect)
 

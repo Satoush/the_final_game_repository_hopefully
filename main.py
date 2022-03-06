@@ -70,36 +70,29 @@ def spawn(num_of_enemies):
 # -------- Main Program Loop -----------
 
 def main_menu():
+
     while True:
+        mx,my = pygame.mouse.get_pos()
         screen.fill(BLACK)
 
         Play_Button = button(400,275,WHITE,font,'PLAY')
         Exit_Button = button(400, 500, WHITE, font, 'EXIT')
-        Play_Button.display_content(screen)
-        Exit_Button.display_content(screen)
+
+        for b in [Play_Button,Exit_Button]:
+            b.draw(screen)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:
-                    if Play_Button.press(mx,my):
-                        print("pressed")
-                    else:
-                        if Exit_Button.press(mx,my):
-                            pygame.quit()
-                            exit()
+                if Play_Button.pressed(mx,my):
+                    game(rounds,kills,num_of_enemies)
+                if Exit_Button.pressed(mx,my):
+                    pygame.quit()
+                    exit()
+
         pygame.display.update()
-
-
-
-
-
-
-
-
-
 
 
 def game(rounds,kills,num_of_enemies):
@@ -179,5 +172,6 @@ spawn(num_of_enemies)
 
 # Calling main program
 if __name__ == '__main__':
-    game(rounds,kills,num_of_enemies)
+    main_menu()
+    #game(rounds,kills,num_of_enemies)
 

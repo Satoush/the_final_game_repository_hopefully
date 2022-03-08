@@ -5,27 +5,28 @@ screen = pygame.display.set_mode((800, 600))
 
 
 class enemy():
-    def __init__(self,Image_path,X,Y,changeX,changeY,velocity):
+    def __init__(self, Image_path, X, Y, changeX, changeY, velocity):
         self.Image_path = Image_path
         self.X = X
         self.Y = Y
         self.changeX = changeX
         self.changeY = changeY
         self.velocity = velocity
-        #self.num_of_enemies = 6
-        self.rect = self.Image_path.get_rect(center = (self.X,self.Y))
-       #print(self.rect)
+        # self.num_of_enemies = 6
+        self.points = 5
+        self.rect = self.Image_path.get_rect(center=(self.X, self.Y))
+        self.ttk = 1
 
-
+    # print(self.rect)
 
     def draw(self):
-        screen.blit(self.Image_path, (self.X , self.Y))
-        #pygame.draw.rect(screen, pygame.Color("red"), (self.rect))
+        screen.blit(self.Image_path, (self.X, self.Y))
+        # pygame.draw.rect(screen, pygame.Color("red"), (self.rect))
 
     # Adding basic movement towards player
-    def move_to_player(self, PlayerX,PlayerY):
+    def move_to_player(self, PlayerX, PlayerY):
         if self.X > PlayerX:
-            self.changeX =  -1 * self.velocity
+            self.changeX = -1 * self.velocity
 
         elif self.X < PlayerX:
             self.changeX = self.velocity
@@ -34,9 +35,8 @@ class enemy():
             if self.Y == PlayerX:
                 self.changeX = 0
 
-
         if self.Y > PlayerY:
-            self.changeY =  -1 * self.velocity
+            self.changeY = -1 * self.velocity
 
         elif self.Y < PlayerY:
             self.changeY = self.velocity
@@ -48,32 +48,29 @@ class enemy():
         self.rect[0] = self.X
         self.rect[1] = self.Y
 
-
-
-
         self.X += self.changeX
         self.Y += self.changeY
 
-            # self.rect[1] += self.changeY
-            # self.rect[0] += self.changeX
+        # self.rect[1] += self.changeY
+        # self.rect[0] += self.changeX
+        
+    def check_if_dead(self,damage):
+        if damage == self.ttk:
+            return True
 
+    def destroy(self, enemy_object, enemy_array,damage):
+        if damage == self.ttk:
+            if enemy_object in enemy_array:
+                enemy_array.remove(self)
+                del self
 
-    def destroy(self,enemy_object,enemy_array):
-        if enemy_object in enemy_array:
-            enemy_array.remove(self)
-            del self
-    
-
-
-    def update(self,PlayerX,PlayerY):
-        self.move_to_player(PlayerX,PlayerY)
+    def update(self, PlayerX, PlayerY):
+        self.move_to_player(PlayerX, PlayerY)
         self.draw()
 
-
-
     @staticmethod
-    def updateAllZombies(Enemy_list,PlayerX,PlayerY):
+    def updateAllZombies(Enemy_list, PlayerX, PlayerY):
         for e in Enemy_list:
-            e.update(PlayerX,PlayerY)
+            e.update(PlayerX, PlayerY)
 
 

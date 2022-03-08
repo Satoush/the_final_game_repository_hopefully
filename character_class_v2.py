@@ -21,24 +21,24 @@ class Character():
         self.dx = math.cos(self.angle) * self.velocity
         self.dy = math.sin(self.angle) * self.velocity
         self.rect = self.image.get_rect(topleft=(400, 300))
+        self.score = 0
 
 
     def player_input(self):
         key = pygame.key.get_pressed()
-        p = pygame
         self.changeX = 0
         self.changeY = 0
-        if key[p.K_DOWN] or key[p.K_UP] or key[p.K_w] or key[p.K_s]:
-            self.changeY = self.velocity * - (int(key[p.K_UP] or key[p.K_w]) * 2 - 1)
+        if key[pygame.K_DOWN] or key[pygame.K_UP] or key[pygame.K_w] or key[pygame.K_s]:
+            self.changeY = self.velocity * - (int(key[pygame.K_UP] or key[pygame.K_w]) * 2 - 1)
 
-        if key[p.K_LEFT] or key[p.K_RIGHT] or key[p.K_a] or key[p.K_d]:
-            self.changeX = self.velocity * - (int(key[p.K_LEFT] or key[p.K_a]) * 2 - 1)
+        if key[pygame.K_LEFT] or key[pygame.K_RIGHT] or key[pygame.K_a] or key[pygame.K_d]:
+            self.changeX = self.velocity * - (int(key[pygame.K_LEFT] or key[pygame.K_a]) * 2 - 1)
 
         self.X += self.changeX
         self.Y += self.changeY
 
-        self.rect[0] = self.X # todo continue with angel
-        self.rect[1] = self.Y #
+        self.rect[0] = self.X
+        self.rect[1] = self.Y
 
     def draw_character(self):
 
@@ -85,6 +85,10 @@ class Character():
         if self.rect.colliderect(Enemy):
             return True
 
+    def count_score(self,points):
+        self.score += points
+        return self.score
+
     #
     #     rect = Enemy.rect
     #     if self.X > Enemy.X and self.X < rect[2] + Enemy.X:
@@ -98,5 +102,3 @@ class Character():
         self.player_input()
         self.boundaries()
         self.draw_character()
-
-

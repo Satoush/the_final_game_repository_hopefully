@@ -12,6 +12,7 @@ from character_class_v2 import Character
 from Enemy import enemy
 from Fast_Enemy import fast_enemy
 from Button import button
+from Tank_Enemy import tank_enemy
 
 # Intialize pygame
 pygame.init()
@@ -29,7 +30,7 @@ playerX_change = 0
 playerY_change = 0
 rounds = 0
 kills = 0
-
+damage = 0
 
 # Enemies data
 Enemy_list = []
@@ -60,31 +61,27 @@ def spawn(num_of_enemies):
     while count < num_of_enemies:
         EnemyX = random.randint(0, 725)
         EnemyY = random.randint(0, 600)
+        Enemy_pick = random.randint(0,2)
         if EnemyX <= (character.X + 128) and EnemyX >= (character.X - 128):
             if EnemyY <= (character.Y + 128) and EnemyY >= (character.Y - 128):
                 pass
         else:
+            if Enemy_pick == 0:
+                zombie = enemy(pygame.image.load('Assets/zombie.png'),EnemyX, EnemyY,changeX,changeY,velocity)
+                Enemy_list.append(zombie)
+                count += 1
+            elif Enemy_pick == 1:
+                zombie_fast = fast_enemy(pygame.image.load('Assets/User_iconnn.png'), EnemyX, EnemyY, changeX, changeY,
+                                             velocity)
+                Enemy_list.append(zombie_fast)
+                count += 1
+            else:
+                tough_zombie = tank_enemy(pygame.image.load('Assets/User_icon.png'), EnemyX, EnemyY, changeX, changeY,
+                                         velocity)
+                Enemy_list.append(tough_zombie)
+                count += 1
 
-            zombie = enemy(pygame.image.load('Assets/zombie.png'),EnemyX, EnemyY,changeX,changeY,velocity)
-            Enemy_list.append(zombie)
-            count += 1
 
-    # print('enemy x', EnemyX)
-    # print('player x',character.X + 64)
-
-def spawn_fast(num_of_enemies):
-    count = 0
-    while count < num_of_enemies:
-        EnemyX = random.randint(0, 725)
-        EnemyY = random.randint(0, 600)
-        if EnemyX <= (character.X + 128) and EnemyX >= (character.X - 128):
-            if EnemyY <= (character.Y + 128) and EnemyY >= (character.Y - 128):
-                pass
-        else:
-
-            zombie_fast = fast_enemy(pygame.image.load('Assets/User_iconnn.png'),EnemyX, EnemyY,changeX,changeY,velocity)
-            Enemy_list.append(zombie_fast)
-            count += 1
 
 
 # -------- Main Program Loop -----------
@@ -107,7 +104,7 @@ def main_menu():
                 exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if Play_Button.pressed(mx,my):
-                    game(rounds,kills,num_of_enemies)
+                    game(rounds,kills,num_of_enemies,damage)
                 if Exit_Button.pressed(mx,my):
                     pygame.quit()
                     exit()
@@ -115,10 +112,8 @@ def main_menu():
         pygame.display.update()
 
 
-def game(rounds,kills,num_of_enemies):
+def game(rounds,kills,num_of_enemies,damage):
     running = True
-
-
     while running:
 
         # Background colour
@@ -158,11 +153,13 @@ def game(rounds,kills,num_of_enemies):
             bullet.move()
             for e in Enemy_list:
                if bullet.has_collided(e.rect):
-                   e.destroy(e,Enemy_list)
-                   #bullet.destroy(character.bullets)
-                   bullet.destroy(bullet,character.bullets)
-                   spawn_fast(1)
-                   kills +=1
+                   damage += 1
+                   if e.check_if_dead(damage):
+                       e.destroy(e,Enemy_list,damage)
+                       #bullet.destroy(character.bullets)
+                       bullet.destroy(bullet,character.bullets)
+                       spawn(1)
+                       kills +=1
 
         if kills == num_of_enemies:
             kills = 0
@@ -170,7 +167,7 @@ def game(rounds,kills,num_of_enemies):
             rounds += 1
             num_of_enemies += 1
             print ('round complete')
-            spawn_fast(num+1)
+            spawn(num+1)
 
 
 
@@ -183,7 +180,7 @@ def game(rounds,kills,num_of_enemies):
 
 
 
-spawn_fast(num_of_enemies)
+spawn(num_of_enemies)
 
 # Calling main program
 main_menu()

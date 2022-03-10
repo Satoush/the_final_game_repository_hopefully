@@ -34,11 +34,13 @@ class Character():
         if key[pygame.K_LEFT] or key[pygame.K_RIGHT] or key[pygame.K_a] or key[pygame.K_d]:
             self.changeX = self.velocity * - (int(key[pygame.K_LEFT] or key[pygame.K_a]) * 2 - 1)
 
+
         self.X += self.changeX
         self.Y += self.changeY
 
         self.rect[0] = self.X
         self.rect[1] = self.Y
+
 
     def draw_character(self):
 

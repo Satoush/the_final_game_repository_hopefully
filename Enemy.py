@@ -5,17 +5,18 @@ screen = pygame.display.set_mode((800, 600))
 
 
 class enemy():
-    def __init__(self, Image_path, X, Y, changeX, changeY, velocity):
+    def __init__(self, Image_path, X, Y, changeX, changeY):
         self.Image_path = Image_path
         self.X = X
         self.Y = Y
         self.changeX = changeX
         self.changeY = changeY
-        self.velocity = velocity
+        self.velocity = 0.05
         # self.num_of_enemies = 6
         self.points = 5
         self.rect = self.Image_path.get_rect(center=(self.X, self.Y))
-        self.ttk = 1
+        self.damage_taken = 0
+        self.health = 1
 
     # print(self.rect)
 
@@ -54,15 +55,15 @@ class enemy():
         # self.rect[1] += self.changeY
         # self.rect[0] += self.changeX
         
-    def check_if_dead(self,damage):
-        if damage == self.ttk:
+    def check_if_dead(self):
+        if self.damage_taken == self.health:
             return True
 
-    def destroy(self, enemy_object, enemy_array,damage):
-        if damage == self.ttk:
-            if enemy_object in enemy_array:
-                enemy_array.remove(self)
-                del self
+
+    def destroy(self, enemy_object, enemy_array):
+        if enemy_object in enemy_array:
+            enemy_array.remove(self)
+            del self
 
     def update(self, PlayerX, PlayerY):
         self.move_to_player(PlayerX, PlayerY)

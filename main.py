@@ -30,7 +30,7 @@ playerX_change = 0
 playerY_change = 0
 rounds = 0
 kills = 0
-damage = 0
+damage_taken = 0
 
 # Enemies data
 Enemy_list = []
@@ -67,17 +67,15 @@ def spawn(num_of_enemies):
                 pass
         else:
             if Enemy_pick == 0:
-                zombie = enemy(pygame.image.load('Assets/zombie.png'),EnemyX, EnemyY,changeX,changeY,velocity)
+                zombie = enemy(pygame.image.load('Assets/zombie.png'),EnemyX, EnemyY,changeX,changeY)
                 Enemy_list.append(zombie)
                 count += 1
             elif Enemy_pick == 1:
-                zombie_fast = fast_enemy(pygame.image.load('Assets/User_iconnn.png'), EnemyX, EnemyY, changeX, changeY,
-                                             velocity)
+                zombie_fast = fast_enemy(pygame.image.load('Assets/User_iconnn.png'), EnemyX, EnemyY, changeX, changeY)
                 Enemy_list.append(zombie_fast)
                 count += 1
             else:
-                tough_zombie = tank_enemy(pygame.image.load('Assets/User_icon.png'), EnemyX, EnemyY, changeX, changeY,
-                                         velocity)
+                tough_zombie = tank_enemy(pygame.image.load('Assets/User_icon.png'), EnemyX, EnemyY, changeX, changeY)
                 Enemy_list.append(tough_zombie)
                 count += 1
 
@@ -104,7 +102,7 @@ def main_menu():
                 exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if Play_Button.pressed(mx,my):
-                    game(rounds,kills,num_of_enemies,damage)
+                    game(rounds,kills,num_of_enemies,damage_taken)
                 if Exit_Button.pressed(mx,my):
                     pygame.quit()
                     exit()
@@ -112,7 +110,7 @@ def main_menu():
         pygame.display.update()
 
 
-def game(rounds,kills,num_of_enemies,damage):
+def game(rounds,kills,num_of_enemies,damage_taken):
     running = True
     while running:
 
@@ -131,14 +129,11 @@ def game(rounds,kills,num_of_enemies,damage):
                 if event.button == 1:
                    character.fire()
 
-
-
-
-
         for e in Enemy_list:
             if character.has_collided(e.rect) == True:
                 running = False
                 e.destroy(e,Enemy_list)
+                spawn(1)
                 print('hit')
                 # EnemyX = random.randint(0, 725)
                 # EnemyY = random.randint(0, 600)
@@ -153,11 +148,12 @@ def game(rounds,kills,num_of_enemies,damage):
             bullet.move()
             for e in Enemy_list:
                if bullet.has_collided(e.rect):
-                   damage += 1
-                   if e.check_if_dead(damage):
-                       e.destroy(e,Enemy_list,damage)
-                       #bullet.destroy(character.bullets)
-                       bullet.destroy(bullet,character.bullets)
+                   bullet.destroy(bullet, character.bullets)
+                   e.damage_taken += 1
+                   print('damage_taken', e.damage_taken)
+                   if e.check_if_dead():
+                       e.damage_taken = 0
+                       e.destroy(e,Enemy_list)
                        spawn(1)
                        kills +=1
 

@@ -16,7 +16,7 @@ class enemy():
         self.points = 5
         self.rect = self.Image_path.get_rect(center=(self.X, self.Y))
         self.damage_taken = 0
-        self.health = 1
+        self.health = 2
 
     # print(self.rect)
 

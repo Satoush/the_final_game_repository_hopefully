@@ -7,7 +7,7 @@ screen = pygame.display.set_mode((800, 600))
 class Character():
     def __init__(self,X,Y,changeX,changeY,targetY,targetX):
         super().__init__()
-        self.image = pygame.image.load('Assets/User_icon.png')
+        self.image = pygame.image.load('Assets/example.png')
         self.X = X
         self.Y = Y
         self.changeX = changeX

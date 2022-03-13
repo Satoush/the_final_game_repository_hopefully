@@ -6,7 +6,7 @@ class tank_enemy(enemy):
     def __init__(self,Image_path,X,Y,changeX,changeY):
         enemy.__init__(self,Image_path,X,Y,changeX,changeY)
         self.Image_bath = Image_path
-        self.points = 10
+        self.points = 15
         self.health = 3
         self.velocity = 0.025
 

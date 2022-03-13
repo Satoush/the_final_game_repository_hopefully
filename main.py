@@ -150,12 +150,12 @@ def game(rounds,kills,num_of_enemies,damage_taken):
                if bullet.has_collided(e.rect):
                    bullet.destroy(bullet, character.bullets)
                    e.damage_taken += 1
-                   print('damage_taken', e.damage_taken)
                    if e.check_if_dead():
-                       e.damage_taken = 0
+                       character.score += e.points
                        e.destroy(e,Enemy_list)
                        spawn(1)
                        kills +=1
+                       print (character.score)
 
         if kills == num_of_enemies:
             kills = 0
